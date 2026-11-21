@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"sync"
 	"syscall"
 	"time"
@@ -38,10 +39,11 @@ type Bridge struct {
 
 func main() {
 	// Prevent duplicate instances
-	lockFile, err := os.OpenFile("/tmp/tgbridge.lock", os.O_CREATE|os.O_RDWR, 0666)
+	lockPath := filepath.Join(os.TempDir(), "antigravity-telegram-bridge.lock")
+	lockFile, err := os.OpenFile(lockPath, os.O_CREATE|os.O_RDWR, 0666)
 	if err == nil {
-		if err := syscall.Flock(int(lockFile.Fd()), syscall.LOCK_EX|syscall.LOCK_NB); err != nil {
-			fmt.Fprintf(os.Stderr, "tgbridge is already running (failed to acquire lock)\n")
+		if err := acquireLock(lockFile); err != nil {
+			fmt.Fprintf(os.Stderr, "antigravity-telegram-bridge is already running (failed to acquire lock)\n")
 			os.Exit(0)
 		}
 	}
