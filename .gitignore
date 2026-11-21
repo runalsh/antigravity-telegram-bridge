@@ -1,0 +1,26 @@
+# Binaries
+tgbridge
+antigravity-telegram-bridge
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Configuration with secrets & private state
+config.json
+state.json
+state.json.log
+bridge.log
+*.log
+
+# Test & scratch scripts
+test_*
+inspect_*
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~

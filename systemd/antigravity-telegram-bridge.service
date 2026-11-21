@@ -1,0 +1,16 @@
+[Unit]
+Description=Antigravity Telegram Bridge
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/antigravity-telegram-bridge
+ExecStart=/usr/local/bin/antigravity-telegram-bridge -config /root/antigravity-telegram-bridge/config.json
+Restart=always
+RestartSec=5
+StandardOutput=append:/root/antigravity-telegram-bridge/bridge.log
+StandardError=append:/root/antigravity-telegram-bridge/bridge.log
+
+[Install]
+WantedBy=multi-user.target

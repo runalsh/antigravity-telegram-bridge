@@ -1,0 +1,12 @@
+{
+  "bot_token": "YOUR_TELEGRAM_BOT_TOKEN",
+  "api_base": "https://api.telegram.org",
+  "allowed_chats": [123456789],
+  "default_chat": 123456789,
+  "workdir": "/root",
+  "mode": "plan",
+  "stream": true,
+  "title_prefix": "[tg]",
+  "driver": "cdp",
+  "cdp_url": "http://127.0.0.1:9222"
+}
