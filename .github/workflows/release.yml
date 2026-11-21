@@ -58,18 +58,19 @@ jobs:
             cp -r systemd "${DIST_DIR}/"
           fi
 
-          cd dist
           if [ "${{ matrix.os }}" = "windows" ]; then
-            zip -r "${OUT_NAME}.zip" "${OUT_NAME}"
+            (cd dist && zip -r "${OUT_NAME}.zip" "${OUT_NAME}")
           else
-            tar -czvf "${OUT_NAME}.tar.gz" "${OUT_NAME}"
+            (cd dist && tar -czvf "${OUT_NAME}.tar.gz" "${OUT_NAME}")
           fi
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: binary-${{ matrix.os }}-${{ matrix.arch }}
-          path: dist/*.tar.gz dist/*.zip
+          path: |
+            dist/*.tar.gz
+            dist/*.zip
           if-no-files-found: error
 
   publish:
@@ -89,7 +90,7 @@ jobs:
       - name: Generate Checksums
         run: |
           cd artifacts
-          sha256sum * > checksums.txt
+          sha256sum antigravity-telegram-bridge_* > checksums.txt
           cat checksums.txt
 
       - name: Create Release
